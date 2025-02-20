@@ -1,3 +1,4 @@
+
 import { 
   IonButtons,
     IonContent, 
@@ -22,12 +23,12 @@ const Favorites: React.FC = () => {
       <IonContent fullscreen>
         <div
           style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
+            display:'flex',
+            alignItems:'center',
+            justifyContent:'center',
             height: '100%',
           }}
-        >
+          >
           Favorites
         </div>
       </IonContent>
