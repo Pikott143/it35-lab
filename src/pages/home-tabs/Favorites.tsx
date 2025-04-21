@@ -1,17 +1,29 @@
-import { 
+import React from 'react';
+import {
   IonButtons,
-  IonContent, 
-  IonHeader, 
-  IonMenuButton, 
-  IonPage, 
-  IonSearchbar, 
-  IonTitle, 
-  IonToolbar 
+  IonContent,
+  IonFab,
+  IonFabButton,
+  IonFabList,
+  IonHeader,
+  IonIcon,
+  IonMenuButton,
+  IonPage,
+  IonSearchbar,
+  IonTitle,
+  IonToolbar
 } from '@ionic/react';
+import { add, colorPalette, document, globe } from 'ionicons/icons';
+import { SearchbarCustomEvent } from '@ionic/react';
+import { SearchbarInputEventDetail } from '@ionic/core';
 
 const Favorites: React.FC = () => {
-  const handleSearch = (e: any) => {
-    console.log('Searching for: ', e.target.value);
+  const handleSearch = (e: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => {
+    console.log('Searching for: ', e.detail.value);
+  };
+
+  const handleFabAction = (action: string) => {
+    console.log(`${action} clicked`);
   };
 
   return (
@@ -19,17 +31,17 @@ const Favorites: React.FC = () => {
       <IonHeader>
         <IonToolbar>
           <IonButtons slot='start'>
-            <IonMenuButton></IonMenuButton>
+            <IonMenuButton />
           </IonButtons>
           <IonTitle>Favorites</IonTitle>
         </IonToolbar>
-        {/* Add IonSearchbar here */}
-        <IonSearchbar 
-          placeholder="Search Favorites..." 
-          onIonInput={handleSearch} 
+        <IonSearchbar
+          placeholder="Search Favorites..."
+          onIonInput={handleSearch}
           debounce={0}
         />
       </IonHeader>
+
       <IonContent fullscreen>
         <div
           style={{
@@ -41,6 +53,24 @@ const Favorites: React.FC = () => {
         >
           Favorites
         </div>
+
+        {/* Floating Action Button */}
+        <IonFab vertical="bottom" horizontal="end" slot="fixed">
+          <IonFabButton size="small">
+            <IonIcon icon={add} />
+          </IonFabButton>
+          <IonFabList side="top">
+            <IonFabButton onClick={() => handleFabAction('Document')}>
+              <IonIcon icon={document} />
+            </IonFabButton>
+            <IonFabButton onClick={() => handleFabAction('Color Palette')}>
+              <IonIcon icon={colorPalette} />
+            </IonFabButton>
+            <IonFabButton onClick={() => handleFabAction('Globe')}>
+              <IonIcon icon={globe} />
+            </IonFabButton>
+          </IonFabList>
+        </IonFab>
       </IonContent>
     </IonPage>
   );
