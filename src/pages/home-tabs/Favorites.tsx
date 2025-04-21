@@ -14,23 +14,17 @@ import {
   IonToolbar
 } from '@ionic/react';
 import { add, colorPalette, document, globe } from 'ionicons/icons';
-import { SearchbarCustomEvent } from '@ionic/react';
-import { SearchbarInputEventDetail } from '@ionic/core';
 
 const Favorites: React.FC = () => {
-  const handleSearch = (e: IonSearchbarCustomEvent<SearchbarInputEventDetail>) => {
-    console.log('Searching for: ', e.detail.value);
-  };
-
-  const handleFabAction = (action: string) => {
-    console.log(`${action} clicked`);
+  const handleSearch = (e: any) => {
+    console.log('Searching for: ', e.target.value);
   };
 
   return (
     <IonPage>
       <IonHeader>
         <IonToolbar>
-          <IonButtons slot='start'>
+          <IonButtons slot="start">
             <IonMenuButton />
           </IonButtons>
           <IonTitle>Favorites</IonTitle>
@@ -54,20 +48,20 @@ const Favorites: React.FC = () => {
           Favorites
         </div>
 
-        {/* Floating Action Button */}
+        {/* FAB added here */}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton size="small">
-            <IonIcon icon={add} />
+            <IonIcon icon={add}></IonIcon>
           </IonFabButton>
-          <IonFabList side="top">
-            <IonFabButton onClick={() => handleFabAction('Document')}>
-              <IonIcon icon={document} />
+          <IonFabList side="end">
+            <IonFabButton>
+              <IonIcon icon={document}></IonIcon>
             </IonFabButton>
-            <IonFabButton onClick={() => handleFabAction('Color Palette')}>
-              <IonIcon icon={colorPalette} />
+            <IonFabButton>
+              <IonIcon icon={colorPalette}></IonIcon>
             </IonFabButton>
-            <IonFabButton onClick={() => handleFabAction('Globe')}>
-              <IonIcon icon={globe} />
+            <IonFabButton>
+              <IonIcon icon={globe}></IonIcon>
             </IonFabButton>
           </IonFabList>
         </IonFab>

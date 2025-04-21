@@ -49,12 +49,11 @@ const Feed: React.FC = () => {
             src="https://ionicframework.com/docs/img/demos/card-media.png"
           />
           <IonCardHeader>
-            <IonCardTitle>Card Title</IonCardTitle>
-            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+            <IonCardTitle>ONE PIECE: FILM RED</IonCardTitle>
           </IonCardHeader>
 
           <IonCardContent>
-            Here's a small text description for the card content. Nothing more, nothing less.
+          Uta, the most beloved singer on the planet, is known for hiding her own identity when performing. Now, for the first time, she will reveal herself to the world. All of Uta's fans, including the Straw Hats led by Luffy, await.
           </IonCardContent>
         </IonCard>
 
@@ -64,12 +63,11 @@ const Feed: React.FC = () => {
             src="https://ionicframework.com/docs/img/demos/card-media.png"
           />
           <IonCardHeader>
-            <IonCardTitle>Card Title</IonCardTitle>
-            <IonCardSubtitle>Card Subtitle</IonCardSubtitle>
+            <IonCardTitle>ONE PIECE: DRESSROSA ARC</IonCardTitle>
           </IonCardHeader>
 
           <IonCardContent>
-            Here's a small text description for the card content. Nothing more, nothing less.
+          The Straw Hats and Law reach Dressrosa where they plan to bring down Doflamingo. A sequence of unexpected events shakes the world order, and Doflamingo proves to be a challenge that even some of the strongest warriors cannot overcome.
           </IonCardContent>
         </IonCard>
 
