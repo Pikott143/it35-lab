@@ -10,7 +10,7 @@ import {
   IonToast,  
   useIonRouter
 } from '@ionic/react';
-import { logoIonic } from 'ionicons/icons';
+import { personCircleOutline } from 'ionicons/icons'; // Changed to a more professional user icon
 import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 
@@ -33,17 +33,21 @@ const Login: React.FC = () => {
   const [alertMessage, setAlertMessage] = useState('');
   const [showAlert, setShowAlert] = useState(false);
   const [showToast, setShowToast] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const doLogin = async () => {
+    setIsLoading(true);
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) {
       setAlertMessage(error.message);
       setShowAlert(true);
+      setIsLoading(false);
       return;
     }
 
-    setShowToast(true); 
+    setShowToast(true);
+    setIsLoading(false);
     setTimeout(() => {
       navigation.push('/it35-lab/app', 'forward', 'replace');
     }, 300);
@@ -51,63 +55,70 @@ const Login: React.FC = () => {
   
   return (
     <IonPage>
-      <IonContent className="ion-padding" style={{ 
-        '--background': '#000', 
-        display: 'flex', 
-        justifyContent: 'center', 
-        alignItems: 'center', 
-        height: '100vh' 
-      }}>
-        <div style={{
-          background: 'rgba(255, 255, 255, 0.05)',
-          padding: '40px',
-          borderRadius: '20px',
-          backdropFilter: 'blur(10px)',
-          width: '90%',
-          maxWidth: '400px',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center'
-        }}>
-          <IonAvatar style={{
-            width: '100px',
-            height: '100px',
-            marginBottom: '20px'
-          }}>
-            <IonIcon 
-              icon={logoIonic}
-              color='primary'
-              style={{ fontSize: '80px', color: '#6c757d' }} 
-            />
-          </IonAvatar>
-          <h1 style={{ color: 'white', marginBottom: '20px' }}>USER LOGIN</h1>
-
-          <IonInput
-            label="Email" 
-            labelPlacement="floating" 
-            fill="outline"
-            type="email"
-            placeholder="Enter Email"
-            value={email}
-            onIonChange={e => setEmail(e.detail.value!)}
-          />
-          <IonInput style={{ marginTop: '10px' }}      
-            fill="outline"
-            type="password"
-            placeholder="Password"
-            value={password}
-            onIonChange={e => setPassword(e.detail.value!)}
-          >
-            <IonInputPasswordToggle slot="end" />
-          </IonInput>
-
-          <IonButton onClick={doLogin} expand="full" shape="round" style={{ marginTop: '20px' }}>
-            Login
-          </IonButton>
-
-          <IonButton routerLink="/it35-lab/register" expand="full" fill="clear" shape="round" style={{ color: 'white', marginTop: '10px' }}>
-            Don't have an account? Register here
-          </IonButton>
+      <IonContent className="ion-padding" color="light">
+        <div className="login-container">
+          <div className="login-card">
+            <div className="logo-container">
+              <IonAvatar className="logo-avatar">
+                <IonIcon 
+                  icon={personCircleOutline}  // Changed to a more professional user icon
+                  className="logo-icon"
+                />
+              </IonAvatar>
+            </div>
+            
+            <h1 className="login-title">Welcome Back</h1>
+            <p className="login-subtitle">Please sign in to continue</p>
+            
+            <div className="form-group">
+              <IonInput
+                className="custom-input"
+                label="Email" 
+                labelPlacement="floating" 
+                fill="outline"
+                type="email"
+                placeholder="Enter Email"
+                value={email}
+                onIonChange={e => setEmail(e.detail.value!)}
+                style={{ '--color': '#000000' }}  // Added black text color
+              />
+            </div>
+            
+            <div className="form-group">
+              <IonInput
+                className="custom-input"
+                fill="outline"
+                type="password"
+                placeholder="Password"
+                value={password}
+                onIonChange={e => setPassword(e.detail.value!)}
+                style={{ '--color': '#000000' }}  // Added black text color
+              >
+                <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
+              </IonInput>
+            </div>
+            
+            <IonButton 
+              className="login-button"
+              onClick={doLogin} 
+              expand="block" 
+              shape="round"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing In...' : 'Sign In'}
+            </IonButton>
+            
+            <div className="register-link">
+              <IonButton 
+                routerLink="/it35-lab/register" 
+                fill="clear" 
+                size="small"
+                className="register-button"
+              >
+                Don't have an account? <strong>Register</strong>
+              </IonButton>
+            </div>
+          </div>
         </div>
 
         {/* Reusable AlertBox Component */}
@@ -119,7 +130,7 @@ const Login: React.FC = () => {
           onDidDismiss={() => setShowToast(false)}
           message="Login successful! Redirecting..."
           duration={1500}
-          position="center"
+          position="top"
           color="primary"
         />
       </IonContent>
@@ -128,3 +139,94 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
+
+const styles = `
+  .login-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 80vh;
+    padding: 20px;
+  }
+  
+  .login-card {
+    width: 100%;
+    max-width: 400px;
+    background: white;
+    border-radius: 16px;
+    padding: 32px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 24px;
+  }
+  
+  .logo-avatar {
+    width: 100px;
+    height: 100px;
+    background: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .logo-icon {
+    font-size: 80px;
+    color: #5e72e4;
+  }
+  
+  .login-title {
+    text-align: center;
+    color: #2d3748;
+    margin-bottom: 8px;
+    font-size: 24px;
+    font-weight: 600;
+  }
+  
+  .login-subtitle {
+    text-align: center;
+    color: #718096;
+    margin-bottom: 32px;
+    font-size: 14px;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .custom-input {
+    --border-radius: 8px;
+    --border-color:rgb(2, 2, 2);
+    --highlight-color-focused: #5e72e4;
+    --color: #000000; /* Ensures text is black */
+  }
+  
+  .login-button {
+    --background: #5e72e4;
+    --background-activated: #4a5acf;
+    --background-focused: #4a5acf;
+    --background-hover: #4a5acf;
+    margin-top: 16px;
+    height: 48px;
+    font-weight: 600;
+     --color: #000000; 
+  }
+  
+  .register-link {
+    text-align: center;
+    margin-top: 24px;
+  }
+  
+  .register-button {
+    --color:rgb(8, 9, 11);
+    font-size: 14px;
+  }
+`;
+
+// Inject styles
+const styleElement = document.createElement('style');
+styleElement.innerHTML = styles;
+document.head.appendChild(styleElement);
