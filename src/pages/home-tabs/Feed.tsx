@@ -18,6 +18,7 @@ import {
   IonCardTitle,
   IonCardContent
 } from '@ionic/react';
+import FeedContainer from '../../components/FeedContainer';
 import { add, colorPalette, document, globe } from 'ionicons/icons';
 
 const Feed: React.FC = () => {

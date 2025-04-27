@@ -48,25 +48,25 @@ const Favorites: React.FC = () => {
           Favorites
         </div>
 
-        {/* FAB added here */}
-        <IonFab vertical="bottom" horizontal="end" slot="fixed">
-          <IonFabButton size="small">
-            <IonIcon icon={add}></IonIcon>
-          </IonFabButton>
-          <IonFabList side="end">
-            <IonFabButton>
-              <IonIcon icon={document}></IonIcon>
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={colorPalette}></IonIcon>
-            </IonFabButton>
-            <IonFabButton>
-              <IonIcon icon={globe}></IonIcon>
-            </IonFabButton>
-          </IonFabList>
-        </IonFab>
-      </IonContent>
-    </IonPage>
+          {/* Floating Action Button */}
+                <IonFab vertical="bottom" horizontal="end" slot="fixed">
+                  <IonFabButton size="small">
+                    <IonIcon icon={add} />
+                  </IonFabButton>
+                  <IonFabList side="top">
+                    <IonFabButton>
+                      <IonIcon icon={document} />
+                    </IonFabButton>
+                    <IonFabButton>
+                      <IonIcon icon={colorPalette} />
+                    </IonFabButton>
+                    <IonFabButton>
+                      <IonIcon icon={globe} />
+                    </IonFabButton>
+                  </IonFabList>
+                </IonFab>
+              </IonContent>
+            </IonPage>
   );
 };
 
