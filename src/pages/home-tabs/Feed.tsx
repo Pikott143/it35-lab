@@ -113,6 +113,21 @@ const Feed: React.FC = () => {
           </IonCardContent>
         </IonCard>
 
+        <IonCard>
+          <img
+            alt="Silhouette of mountains"
+            src="https://d32qys9a6wm9no.cloudfront.net/images/tvs/backdrop/dd/6822f19df8a7933a3d9b89bf303fdf95_1280x720.jpg?t=1697100301"
+          />
+          <IonCardHeader>
+            <IonCardTitle>ONE PIECE: SABAODY ARCHIPELAGO ARC</IonCardTitle>
+          </IonCardHeader>
+
+          <IonCardContent>
+          This arc marks a turning point for the Straw Hat Pirates since they are all utterly defeated by powerful opponents such as Admiral Kizaru, several Pacifista, Bartholomew Kuma, and Sentomaru, and are then separated from one another. Sabaody Archipelago is the tenth island that the Straw Hats encounter on the Grand Line.
+          </IonCardContent>
+        </IonCard>
+
+
         {/* Floating Action Button */}
         <IonFab vertical="bottom" horizontal="end" slot="fixed">
           <IonFabButton size="small">
