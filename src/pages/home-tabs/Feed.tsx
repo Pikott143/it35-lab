@@ -46,7 +46,7 @@ const Feed: React.FC = () => {
         <IonCard>
           <img
             alt="Silhouette of mountains"
-            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTF6a2zHhrdpaXgIo8NdQAty1qfBS-vOcgBNA&s"
+            src="https://i.redd.it/new-promotional-visual-for-film-red-v0-harlfzy7ple91.jpg?width=2067&format=pjpg&auto=webp&s=7a472fe5d386e48db04919adb4a5abde8b04ea42"
           />
           <IonCardHeader>
             <IonCardTitle>ONE PIECE: FILM RED</IonCardTitle>
@@ -88,28 +88,28 @@ const Feed: React.FC = () => {
         <IonCard>
           <img
             alt="Silhouette of mountains"
-            src="https://static1.srcdn.com/wordpress/wp-content/uploads/2024/01/the-straw-hats-from-the-one-piece-anime-ending-dear-sunrise.jpg"
+            src="https://staticg.sportskeeda.com/editor/2022/09/12d4f-16622229890465-1920.jpg"
           />
           <IonCardHeader>
-            <IonCardTitle>ONE PIECE: EGGHEAD ARC</IonCardTitle>
+            <IonCardTitle>ONE PIECE: WANO ARC </IonCardTitle>
           </IonCardHeader>
 
           <IonCardContent>
-          Luffy arrived on the island of the future, Egghead, where he met Vegapunk. Given that Egghead followed the future theme, fans knew that this would be an arc focused on technology, as well as many inventions made by Vegapunk over the years.
+          From episodes 892 to 1085, One Piece dives into the enigma of Wano Country, ruled by the not-so-charming duo of Kurozumi Orochi and the heavyweight Yonko, Kaido. This arc is the series' mic drop, neatly tying up loose ends from previous tales.
           </IonCardContent>
         </IonCard>
 
         <IonCard>
           <img
             alt="Silhouette of mountains"
-            src="https://static1.srcdn.com/wordpress/wp-content/uploads/2024/01/the-straw-hats-from-the-one-piece-anime-ending-dear-sunrise.jpg"
+            src="https://static.beebom.com/wp-content/uploads/2022/12/Whole-Cake-Island-Saga.jpg?w=1024&quality=75"
           />
           <IonCardHeader>
-            <IonCardTitle>ONE PIECE: EGGHEAD ARC</IonCardTitle>
+            <IonCardTitle>ONE PIECE: WHOLECAKE ISLAND ARC</IonCardTitle>
           </IonCardHeader>
 
           <IonCardContent>
-          Luffy arrived on the island of the future, Egghead, where he met Vegapunk. Given that Egghead followed the future theme, fans knew that this would be an arc focused on technology, as well as many inventions made by Vegapunk over the years.
+          Sanji finds out about Pedro's death as the Straw Hats successfully sail out of Totto Land, and as she overhears the news on Cacao Island, Pudding weeps while recalling her memories with Sanji.
           </IonCardContent>
         </IonCard>
 
