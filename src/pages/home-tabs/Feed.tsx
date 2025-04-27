@@ -88,20 +88,6 @@ const Feed: React.FC = () => {
         <IonCard>
           <img
             alt="Silhouette of mountains"
-            src="https://staticg.sportskeeda.com/editor/2022/09/12d4f-16622229890465-1920.jpg"
-          />
-          <IonCardHeader>
-            <IonCardTitle>ONE PIECE: WANO ARC </IonCardTitle>
-          </IonCardHeader>
-
-          <IonCardContent>
-          From episodes 892 to 1085, One Piece dives into the enigma of Wano Country, ruled by the not-so-charming duo of Kurozumi Orochi and the heavyweight Yonko, Kaido. This arc is the series' mic drop, neatly tying up loose ends from previous tales.
-          </IonCardContent>
-        </IonCard>
-
-        <IonCard>
-          <img
-            alt="Silhouette of mountains"
             src="https://static.beebom.com/wp-content/uploads/2022/12/Whole-Cake-Island-Saga.jpg?w=1024&quality=75"
           />
           <IonCardHeader>
@@ -110,6 +96,20 @@ const Feed: React.FC = () => {
 
           <IonCardContent>
           Sanji finds out about Pedro's death as the Straw Hats successfully sail out of Totto Land, and as she overhears the news on Cacao Island, Pudding weeps while recalling her memories with Sanji.
+          </IonCardContent>
+        </IonCard>
+
+        <IonCard>
+          <img
+            alt="Silhouette of mountains"
+            src="https://staticg.sportskeeda.com/editor/2022/09/12d4f-16622229890465-1920.jpg"
+          />
+          <IonCardHeader>
+            <IonCardTitle>ONE PIECE: WANO ARC </IonCardTitle>
+          </IonCardHeader>
+
+          <IonCardContent>
+          From episodes 892 to 1085, One Piece dives into the enigma of Wano Country, ruled by the not-so-charming duo of Kurozumi Orochi and the heavyweight Yonko, Kaido. This arc is the series' mic drop, neatly tying up loose ends from previous tales.
           </IonCardContent>
         </IonCard>
 
