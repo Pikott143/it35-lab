@@ -51,36 +51,37 @@ const Login: React.FC = () => {
   
   return (
     <IonPage>
-      <IonContent className='ion-padding'>
+      <IonContent className="ion-padding" style={{ 
+        '--background': '#000', 
+        display: 'flex', 
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        height: '100vh' 
+      }}>
         <div style={{
+          background: 'rgba(255, 255, 255, 0.05)',
+          padding: '40px',
+          borderRadius: '20px',
+          backdropFilter: 'blur(10px)',
+          width: '90%',
+          maxWidth: '400px',
           display: 'flex',
-          flexDirection:'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          marginTop:'25%'
+          flexDirection: 'column',
+          alignItems: 'center'
         }}>
-          <IonAvatar
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              width: '150px',
-              height: '150px',
-              borderRadius: '50%', 
-              overflow: 'hidden' 
-            }}
-          >
+          <IonAvatar style={{
+            width: '100px',
+            height: '100px',
+            marginBottom: '20px'
+          }}>
             <IonIcon 
               icon={logoIonic}
               color='primary'
-              style={{ fontSize: '120px', color: '#6c757d' }} 
+              style={{ fontSize: '80px', color: '#6c757d' }} 
             />
           </IonAvatar>
-          <h1 style={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>USER LOGIN</h1>
+          <h1 style={{ color: 'white', marginBottom: '20px' }}>USER LOGIN</h1>
+
           <IonInput
             label="Email" 
             labelPlacement="floating" 
@@ -90,23 +91,24 @@ const Login: React.FC = () => {
             value={email}
             onIonChange={e => setEmail(e.detail.value!)}
           />
-          <IonInput style={{ marginTop:'10px' }}      
+          <IonInput style={{ marginTop: '10px' }}      
             fill="outline"
             type="password"
             placeholder="Password"
             value={password}
             onIonChange={e => setPassword(e.detail.value!)}
           >
-            <IonInputPasswordToggle slot="end"></IonInputPasswordToggle>
+            <IonInputPasswordToggle slot="end" />
           </IonInput>
-        </div>
-        <IonButton onClick={doLogin} expand="full" shape='round'>
-          Login
-        </IonButton>
 
-        <IonButton routerLink="/it35-lab/register" expand="full" fill="clear" shape='round'>
-          Don't have an account? Register here
-        </IonButton>
+          <IonButton onClick={doLogin} expand="full" shape="round" style={{ marginTop: '20px' }}>
+            Login
+          </IonButton>
+
+          <IonButton routerLink="/it35-lab/register" expand="full" fill="clear" shape="round" style={{ color: 'white', marginTop: '10px' }}>
+            Don't have an account? Register here
+          </IonButton>
+        </div>
 
         {/* Reusable AlertBox Component */}
         <AlertBox message={alertMessage} isOpen={showAlert} onClose={() => setShowAlert(false)} />
@@ -117,7 +119,7 @@ const Login: React.FC = () => {
           onDidDismiss={() => setShowToast(false)}
           message="Login successful! Redirecting..."
           duration={1500}
-          position="top"
+          position="center"
           color="primary"
         />
       </IonContent>
