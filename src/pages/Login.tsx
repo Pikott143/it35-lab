@@ -137,7 +137,7 @@ const Login: React.FC = () => {
               {/* Google reCAPTCHA */}
               <div style={{ marginTop: '20px', minHeight: '80px', display: 'flex', justifyContent: 'center' }}>
                 <ReCAPTCHA
-                  sitekey="6LcNKB8rAAAAAHiFSjYNnVytOSOT9qOVLTUU6B8g"  // Replace with your own site key
+                  sitekey="6LcWgSorAAAAAEW5Bq4QS5qm51_kdG17t9sXvACe"
                   onChange={(value) => setRecaptchaValue(value)}
                 />
               </div>
