@@ -1,0 +1,3 @@
+ npm install bcryptjs  
+ npm install @supabase/supabase-js
+ npm install react-google-recaptcha
