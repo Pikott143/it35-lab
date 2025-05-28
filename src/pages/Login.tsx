@@ -10,13 +10,11 @@ import {
   IonToast,
   useIonRouter
 } from '@ionic/react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-const MAX_ATTEMPTS = 5;
-const LOCKOUT_DURATION = 10 * 60 * 1000; // 10 minutes
-
+// Reusable Alert
 const AlertBox: React.FC<{ message: string; isOpen: boolean; onClose: () => void }> = ({ message, isOpen, onClose }) => (
   <IonAlert
     isOpen={isOpen}
@@ -37,64 +35,44 @@ const Login: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [showToast, setShowToast] = useState(false);
 
-  const [failedAttempts, setFailedAttempts] = useState(0);
-  const [lockUntil, setLockUntil] = useState<number | null>(null);
-
-  // Load lockUntil from localStorage on mount
-  useEffect(() => {
-    const storedLock = localStorage.getItem('lockUntil');
-    if (storedLock) setLockUntil(Number(storedLock));
-  }, []);
-
-  // Save lockUntil to localStorage
-  useEffect(() => {
-    if (lockUntil) {
-      localStorage.setItem('lockUntil', lockUntil.toString());
-    } else {
-      localStorage.removeItem('lockUntil');
-    }
-  }, [lockUntil]);
-
   const doLogin = async () => {
-    const now = Date.now();
-
-    // Lockout check
-    if (lockUntil && now < lockUntil) {
-      const remaining = Math.ceil((lockUntil - now) / 1000);
-      setAlertMessage(`Too many failed attempts. Try again in ${remaining} seconds.`);
-      setShowAlert(true);
-      return;
-    }
-
     if (!recaptchaValue) {
       setAlertMessage("Please complete the reCAPTCHA.");
       setShowAlert(true);
       return;
     }
 
-    const { error } = await supabase.auth.signInWithPassword({ email, password });
+    // ✅ STEP 1: Check for failed login attempts (last 10 mins)
+    const { count, error: rateLimitError } = await supabase
+      .from('login_attempts')
+      .select('*', { count: 'exact', head: true })
+      .eq('email', email)
+      .eq('success', false)
+      .gte('attempted_at', new Date(Date.now() - 10 * 60 * 1000).toISOString());
 
-    if (error) {
-      const attempts = failedAttempts + 1;
-      setFailedAttempts(attempts);
-
-      if (attempts >= MAX_ATTEMPTS) {
-        const lockTime = now + LOCKOUT_DURATION;
-        setLockUntil(lockTime);
-        setAlertMessage("Too many failed attempts. You are temporarily locked out for 10 minutes.");
-      } else {
-        setAlertMessage(`Login failed (${attempts}/${MAX_ATTEMPTS}). Please try again.`);
-      }
-
+    if (count !== null && count >= 5) {
+      setAlertMessage("Too many failed login attempts. Please wait 10 minutes before trying again.");
       setShowAlert(true);
       return;
     }
 
-    // Reset lockout on success
-    setFailedAttempts(0);
-    setLockUntil(null);
-    setShowToast(true);
+    // ✅ STEP 2: Attempt login
+    const { error } = await supabase.auth.signInWithPassword({ email, password });
 
+    // ✅ STEP 3: Log the attempt (success or failed)
+    await supabase.from('login_attempts').insert([{
+      email,
+      success: !error,
+      attempted_at: new Date().toISOString()
+    }]);
+
+    if (error) {
+      setAlertMessage(error.message);
+      setShowAlert(true);
+      return;
+    }
+
+    setShowToast(true);
     setTimeout(() => {
       router.push('/it35-lab/app', 'forward', 'replace');
     }, 1000);
@@ -103,6 +81,7 @@ const Login: React.FC = () => {
   return (
     <IonPage>
       <IonContent fullscreen>
+        {/* Background Image */}
         <div style={{
           backgroundImage: 'https://4kwallpapers.com/images/wallpapers/totoro-minimalist-5120x2880-20906.png',
           backgroundSize: 'cover',
@@ -192,7 +171,7 @@ const Login: React.FC = () => {
               </IonButton>
 
               <div style={{ textAlign: 'center', marginTop: '15px', color: 'white', fontSize: '14px' }}>
-                Or Sign In With —
+                Or Sign In With 
               </div>
 
               <div style={{ display: 'flex', justifyContent: 'space-between', marginTop: '10px' }}>
@@ -252,3 +231,4 @@ const Login: React.FC = () => {
 };
 
 export default Login;
+
