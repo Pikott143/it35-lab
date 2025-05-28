@@ -14,7 +14,6 @@ import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import ReCAPTCHA from 'react-google-recaptcha';
 
-// Reusable Alert
 const AlertBox: React.FC<{ message: string; isOpen: boolean; onClose: () => void }> = ({ message, isOpen, onClose }) => (
   <IonAlert
     isOpen={isOpen}
@@ -42,7 +41,6 @@ const Login: React.FC = () => {
       return;
     }
 
-    // ✅ STEP 1: Check for failed login attempts (last 10 mins)
     const { count, error: rateLimitError } = await supabase
       .from('login_attempts')
       .select('*', { count: 'exact', head: true })
@@ -56,10 +54,8 @@ const Login: React.FC = () => {
       return;
     }
 
-    // ✅ STEP 2: Attempt login
     const { error } = await supabase.auth.signInWithPassword({ email, password });
 
-    // ✅ STEP 3: Log the attempt (success or failed)
     await supabase.from('login_attempts').insert([{
       email,
       success: !error,
@@ -78,10 +74,28 @@ const Login: React.FC = () => {
     }, 1000);
   };
 
+  const handleForgotPassword = async () => {
+    if (!email) {
+      setAlertMessage("Please enter your email first.");
+      setShowAlert(true);
+      return;
+    }
+
+    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:8100/reset-password' // Change to deployed domain if needed
+    });
+
+    if (error) {
+      setAlertMessage("Failed to send reset link. Please try again.");
+    } else {
+      setAlertMessage("Password reset email sent! Check your inbox.");
+    }
+    setShowAlert(true);
+  };
+
   return (
     <IonPage>
       <IonContent fullscreen>
-        {/* Background Image */}
         <div style={{
           backgroundImage: 'https://4kwallpapers.com/images/wallpapers/totoro-minimalist-5120x2880-20906.png',
           backgroundSize: 'cover',
@@ -151,7 +165,14 @@ const Login: React.FC = () => {
                   <input type="checkbox" style={{ marginRight: '5px' }} />
                   Remember Me
                 </label>
-                <a href="#" style={{ color: '#ddd', textDecoration: 'underline' }}>Forgot Password</a>
+                <IonButton
+                  fill="clear"
+                  size="small"
+                  style={{ color: '#ddd', padding: 0, minHeight: 0 }}
+                  onClick={handleForgotPassword}
+                >
+                  Forgot Password?
+                </IonButton>
               </div>
 
               <div style={{ marginTop: '20px', minHeight: '80px', display: 'flex', justifyContent: 'center' }}>
@@ -231,4 +252,3 @@ const Login: React.FC = () => {
 };
 
 export default Login;
-
