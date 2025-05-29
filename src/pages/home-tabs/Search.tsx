@@ -33,10 +33,11 @@ const Search: React.FC = () => {
           }}
         >
           <IonSearchbar
-            placeholder="Search something..."
+            placeholder="Search ..."
             style={{ width: '90%', maxWidth: '500px' }}
           />
         </div>
+        
       </IonContent>
     </IonPage>
   );

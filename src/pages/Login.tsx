@@ -1,3 +1,4 @@
+// ... imports
 import {
   IonAlert,
   IonButton,
@@ -14,6 +15,7 @@ import { useState } from 'react';
 import { supabase } from '../utils/supabaseClient';
 import ReCAPTCHA from 'react-google-recaptcha';
 
+// Reusable Alert
 const AlertBox: React.FC<{ message: string; isOpen: boolean; onClose: () => void }> = ({ message, isOpen, onClose }) => (
   <IonAlert
     isOpen={isOpen}
@@ -76,26 +78,28 @@ const Login: React.FC = () => {
 
   const handleForgotPassword = async () => {
     if (!email) {
-      setAlertMessage("Please enter your email first.");
+      setAlertMessage("Please enter your email to reset password.");
       setShowAlert(true);
       return;
     }
 
-    const { error } = await supabase.auth.resetPasswordForEmail(email, {
-      redirectTo: 'http://localhost:8100/reset-password' // Change to deployed domain if needed
+    const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
+      redirectTo: 'http://localhost:8100/reset-password',
     });
 
     if (error) {
-      setAlertMessage("Failed to send reset link. Please try again.");
+      setAlertMessage(error.message);
     } else {
-      setAlertMessage("Password reset email sent! Check your inbox.");
+      setAlertMessage("Password reset link has been sent to your email.");
     }
+
     setShowAlert(true);
   };
 
   return (
     <IonPage>
       <IonContent fullscreen>
+        {/* Background Image */}
         <div style={{
           backgroundImage: 'https://4kwallpapers.com/images/wallpapers/totoro-minimalist-5120x2880-20906.png',
           backgroundSize: 'cover',
@@ -165,14 +169,12 @@ const Login: React.FC = () => {
                   <input type="checkbox" style={{ marginRight: '5px' }} />
                   Remember Me
                 </label>
-                <IonButton
-                  fill="clear"
-                  size="small"
-                  style={{ color: '#ddd', padding: 0, minHeight: 0 }}
+                <button
                   onClick={handleForgotPassword}
+                  style={{ background: 'none', border: 'none', color: '#ddd', textDecoration: 'underline', cursor: 'pointer' }}
                 >
-                  Forgot Password?
-                </IonButton>
+                  Forgot Password
+                </button>
               </div>
 
               <div style={{ marginTop: '20px', minHeight: '80px', display: 'flex', justifyContent: 'center' }}>

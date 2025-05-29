@@ -1,59 +1,102 @@
-import { IonButton, IonContent, IonInput, IonLabel, IonPage, IonToast } from '@ionic/react';
+import {
+  IonPage,
+  IonContent,
+  IonInput,
+  IonButton,
+  IonCard,
+  IonCardContent,
+  IonAlert,
+  IonItem,
+  IonLabel,
+  IonIcon,
+} from '@ionic/react';
 import { useState, useEffect } from 'react';
-import { supabase } from '../supabaseClient';
+import { supabase } from '../utils/supabaseClient';
+import { useIonRouter } from '@ionic/react';
+import { refreshOutline } from 'ionicons/icons';
 
-const ResetPassword = () => {
-  const [password, setPassword] = useState('');
-  const [suggestedPassword, setSuggestedPassword] = useState('');
-  const [showToast, setShowToast] = useState(false);
+const generateStrongPassword = () => {
+  const length = 12;
+  const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+~";
+  let password = "";
+  for (let i = 0, n = charset.length; i < length; ++i) {
+    password += charset.charAt(Math.floor(Math.random() * n));
+  }
+  return password;
+};
 
-  useEffect(() => {
-    const generateSecurePassword = () => {
-      const charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*";
-      let newPassword = '';
-      for (let i = 0; i < 12; i++) {
-        const randomIndex = Math.floor(Math.random() * charset.length);
-        newPassword += charset[randomIndex];
-      }
-      return newPassword;
-    };
-    setSuggestedPassword(generateSecurePassword());
-  }, []);
+const ResetPassword: React.FC = () => {
+  const [password, setPassword] = useState(generateStrongPassword());
+  const [alertMessage, setAlertMessage] = useState('');
+  const [showAlert, setShowAlert] = useState(false);
+  const router = useIonRouter();
 
-  const handleReset = async () => {
+  // 👇 Exchange the session from the URL hash (important for Supabase)
+ useEffect(() => {
+  const handleSessionFromUrl = async () => {
+    const { data, error } = await supabase.auth.getSessionFromUrl({ storeSession: true });
+
+    if (error) {
+      console.error('Error retrieving session from URL:', error.message);
+    } else {
+      console.log('Session retrieved and stored:', data.session);
+    }
+  };
+
+  handleSessionFromUrl();
+}, []);
+
+
+  const handleUpdatePassword = async () => {
     const { error } = await supabase.auth.updateUser({ password });
 
-    if (!error) {
-      setShowToast(true);
+    if (error) {
+      setAlertMessage(error.message);
+      setShowAlert(true);
     } else {
-      console.error(error.message);
+      setAlertMessage("Password updated successfully!");
+      setShowAlert(true);
+      setTimeout(() => router.push('/it35-lab', 'root'), 2000);
     }
+  };
+
+  const handleGeneratePassword = () => {
+    setPassword(generateStrongPassword());
   };
 
   return (
     <IonPage>
-      <IonContent className="ion-padding">
-        <h2>Reset Your Password</h2>
+      <IonContent fullscreen className="ion-padding">
+        <IonCard>
+          <IonCardContent>
+            <h2>Reset Your Password</h2>
 
-        <IonLabel>Suggested Password (copy if you want):</IonLabel>
-        <IonInput readonly value={suggestedPassword} />
+            <IonItem>
+              <IonLabel position="stacked">New Password</IonLabel>
+              <IonInput
+                type="text"
+                value={password}
+                onIonChange={e => setPassword(e.detail.value!)}
+              />
+            </IonItem>
 
-        <IonLabel position="stacked">New Password</IonLabel>
-        <IonInput
-          type="password"
-          placeholder="Enter your new password"
-          value={password}
-          onIonChange={(e) => setPassword(e.detail.value!)}
-        />
+            <IonButton expand="block" color="medium" onClick={handleGeneratePassword}>
+              <IonIcon icon={refreshOutline} slot="start" />
+              Generate Strong Password
+            </IonButton>
 
-        <IonButton expand="block" onClick={handleReset}>
-          Update Password
-        </IonButton>
+            <IonButton expand="block" onClick={handleUpdatePassword} style={{ marginTop: '1rem' }}>
+              Update Password
+            </IonButton>
+          </IonCardContent>
+        </IonCard>
 
-        <IonToast
-          isOpen={showToast}
-          message="Password successfully updated!"
-          duration={2000}
+        <IonAlert
+          isOpen={showAlert}
+          onDidDismiss={() => setShowAlert(false)}
+          header="Notification"
+          message={alertMessage}
+          buttons={['OK']}
         />
       </IonContent>
     </IonPage>
